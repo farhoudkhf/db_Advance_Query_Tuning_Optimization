@@ -18,7 +18,6 @@ SELECT 'Build and train simple machine learning models'::tsvector @@ 'deep'::tsq
 
 
 -- You can use a tsquery to search against a tsvector or plain text
-
 -- This will return "true"
 SELECT to_tsquery('learning & model') @@ to_tsvector('Build and train simple machine learning models');
 

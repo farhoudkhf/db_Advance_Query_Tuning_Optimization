@@ -18,4 +18,5 @@ SELECT to_tsquery('The & machine & learning');
 -- stop words ("in", "a", "the", etc) were removed
 
 SELECT websearch_to_tsquery('The machine learning');
+
 -- result: ('machin' & 'learn')
