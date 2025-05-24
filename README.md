@@ -16,4 +16,12 @@
 * Serializable Isolation Level
 
 
+# Advanced Query - Tuning | Performance Optimization
+* Explain / Analyze
+* Indexing
+* Tuning Joins
+* Partitioning Data
+* Materialized Views
+* Database Statistics and Identifying Slow Queries
+* Other Optimization Techniques
 
