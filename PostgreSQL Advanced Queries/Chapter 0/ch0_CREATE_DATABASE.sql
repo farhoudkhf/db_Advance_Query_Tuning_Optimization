@@ -1,0 +1,1 @@
+CREATE DATABASE two_trees;
