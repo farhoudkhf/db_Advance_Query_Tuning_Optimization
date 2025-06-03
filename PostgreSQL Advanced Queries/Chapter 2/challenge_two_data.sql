@@ -1,0 +1,60 @@
+-- Create a table for the olive oil product data
+CREATE TABLE products (
+    product_id      varchar(10),
+    category        varchar(25),
+    product_name    varchar(100),
+    price           decimal(8,2)
+);
+
+
+-- Add data to the products table
+INSERT INTO products
+    (product_id, category, product_name, price)
+VALUES
+('KE180', 'Solar panels', 'K-Eco 180', 315),
+('KE200', 'Solar panels', 'K-Eco 200', 350),
+('KE225', 'Solar panels', 'K-Eco 225', 385),
+('KE250', 'Solar panels', 'K-Eco 250', 437.5),
+('KE250X', 'Solar panels', 'K-Eco 250x', 650),
+('KE275', 'Solar panels', 'K-Eco 275', 481.25),
+('KE300', 'Solar panels', 'K-Eco 300', 525),
+('KE325', 'Solar panels', 'K-Eco 325', 568.75),
+('KE325X', 'Solar panels', 'K-Eco 325x', 890.5),
+('KE450', 'Solar panels', 'K-Eco 450', 787.5),
+('KE5', 'Solar panels', 'K-Eco Mini ', 39.95),
+('KE001', 'Solar panels', 'K-Eco phone charger', 13.85),
+('KE575', 'Solar panels', 'K-Eco 575', 1006.25),
+('KI2K', 'Grid Tie Inverters', 'K-Invert 2K', 3060),
+('KI4K', 'Grid Tie Inverters', 'K-Invert 4K', 6120),
+('KI7K', 'Grid Tie Inverters', 'K-Invert 7K', 10710),
+('KI9K', 'Grid Tie Inverters', 'K-Invert 9K', 19800),
+('KI13K', 'Grid Tie Inverters', 'K-Invert 13K', 28600),
+('KI20K', 'Grid Tie Inverters', 'K-Invert 20K', 44000),
+('KEAA06', 'Batteries', 'K-Eco AA  NiMH rechargeable batteries (6-pack)', 7.35),
+('KEAA12', 'Batteries', 'K-Eco AA  NiMH rechargeable batteries (12-pack)', 12.5),
+('KEAAA06', 'Batteries', 'K-Eco  AAA NiMH rechargeable batteries  (6-pack)', 6.5),
+('KEAAA12', 'Batteries', 'K-Eco  AAA NiMH rechargeable batteries (12-pack)', 9.8),
+('KE12Li', 'Batteries', 'K-Eco 12-volt Lithium-ion solar backup battery', 4500),
+('KE18Li', 'Batteries', 'K-Eco 18-volt Lithium-ion solar backup battery', 5200),
+('KE36Li', 'Batteries', 'K-Eco 36-volt Lithium-ion solar backup battery', 7500),
+('KE48Li', 'Batteries', 'K-Eco 48-volt Lithium-ion solar backup battery', 13233),
+('KEBR5', 'Wind harvester', 'K-Eco Breeze Mini ', 55),
+('KEBL100', 'Wind harvester', 'K-Eco Blast 100', 280),
+('KEBL200', 'Wind harvester', 'K-Eco Blast 200', 550),
+('KEBL400', 'Wind harvester', 'K-Eco Blast 400', 880),
+('KEBL400X', 'Wind harvester', 'K-Eco Blast 400x', 1000.25),
+('KEBL600', 'Wind harvester', 'K-Eco Blast 600', 1025),
+('KEBL800', 'Wind harvester', 'K-Eco Blast 800', 1280),
+('KEBL1200', 'Wind harvester', 'K-Eco Blast 1200', 2300),
+('KE9W', 'Lightbulbs', 'K-Eco Energy Bulbs 9W ', 2),
+('KE9W04', 'Lightbulbs', 'K-Eco Energy Bulbs 9W (4-pack)', 6.2),
+('KE9W08', 'Lightbulbs', 'K-Eco Energy Bulbs 9W  (8-pack)', 9.5),
+('KE13W', 'Lightbulbs', 'K-Eco Energy Bulbs 13W ', 2.24),
+('KE13W04', 'Lightbulbs', 'K-Eco Energy Bulbs 13W (4-pack)', 6.55),
+('KE13W08', 'Lightbulbs', 'K-Eco Energy Bulbs 13W  (8-pack)', 11.25),
+('KE20W', 'Lightbulbs', 'K-Eco Energy Bulbs 20W ', 2.65),
+('KE20W04', 'Lightbulbs', 'K-Eco Energy Bulbs 20W (4-pack)', 7.45),
+('KE20W08', 'Lightbulbs', 'K-Eco Energy Bulbs 20W  (8-pack)', 12.4),
+('KE23W', 'Lightbulbs', 'K-Eco Energy Bulbs 23W ', 3.8),
+('KE23W04', 'Lightbulbs', 'K-Eco Energy Bulbs 23W (4-pack)', 12),
+('KE23W08', 'Lightbulbs', 'K-Eco Energy Bulbs 23W  (8-pack)', 17.5)
