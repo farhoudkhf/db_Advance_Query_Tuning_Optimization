@@ -99,6 +99,21 @@ GROUP BY gender
 ;
 
 
+-- ch1_5 
+-- Include overall aggregates with ROLLUP
+SELECT * FROM inventory.products;
+
+SELECT 
+	category_id,
+	product_name,
+	count(*),
+	min(price),
+	max(price),
+	avg(price)
+FROM inventory.products
+group by rollup (category_id, product_name)
+order by category_id, product_name
+;
 
 
 
