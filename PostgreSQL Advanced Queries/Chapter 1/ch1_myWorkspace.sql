@@ -99,9 +99,17 @@ GROUP BY gender
 ;
 
 
--- ch1_5 
+-- ch1_5  ROLLUP
 -- Include overall aggregates with ROLLUP
 SELECT * FROM inventory.products;
+
+SELECT
+	category_id,
+	count(distinct(product_name))
+from
+	inventory.products
+GROUP by rollup(category_id)
+;
 
 SELECT 
 	category_id,
@@ -114,6 +122,69 @@ FROM inventory.products
 group by rollup (category_id, product_name)
 order by category_id, product_name
 ;
+
+
+-- ch1_6 CUBE
+-- Return all possible combinations of groups with CUBE
+SELECT * FROM inventory.products;
+
+SELECT * 
+FROM inventory.products
+ORDER by category_id, size
+;
+
+SELECT 
+	category_id, 
+	-- count(distinct(category_id)),
+	count(distinct(size))
+from inventory.products
+group by category_id
+;
+
+select count(distinct(size))
+from inventory.products
+;
+
+select size
+from inventory.products
+GROUP by size
+order by size
+;
+
+select distinct size
+from inventory.products
+-- GROUP by size
+order by size
+;
+
+SELECT 
+	category_id,
+	size,
+	count(*),
+	min(price) as "lowest price",
+	max(price) as "highest price",
+	avg(price) as "average price"
+FROM inventory.products
+group by rollup (category_id, size)
+order by category_id, size
+;
+
+SELECT 
+	category_id,
+	size,
+	count(*),
+	min(price) as "lowest price",
+	max(price) as "highest price",
+	avg(price) as "average price"
+FROM inventory.products
+group by cube (category_id, size)
+order by category_id, size
+;
+
+
+-- ch1_7 
+-- Segmenting groups with aggregate filters
+
 
 
 
