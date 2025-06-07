@@ -182,10 +182,48 @@ order by category_id, size
 ;
 
 
--- ch1_7 
+-- ch1_7 - FILTER
 -- Segmenting groups with aggregate filters
+select * from inventory.products;
 
+select 
+	category_id,
+	count(*) as "count all", 
+	avg(price) as "average price"
+from
+	inventory.products
+group by
+	category_id
+order by
+	category_id
+;
 
+SELECT 
+	category_id, 
+	count(*) as "count all",
+	avg(price) as "average price",
+	-- FILTER by small products
+	count(*) filter (where size <= 16) as "count small",
+	avg(price) filter (where size <= 16) as "average small",
+	-- filter by large products
+	count(*) filter (where size > 16) as "count large",
+	avg(price) filter (where size > 16) as "average large"
+FROM inventory.products
+group by category_id
+order by category_id
+;
 
-
-
+SELECT 
+	category_id, 
+	count(*) as "count all",
+	avg(price) as "average price",
+	-- FILTER by small products
+	count(*) filter (where size <= 16) as "count small",
+	avg(price) filter (where size <= 16) as "average small",
+	-- filter by large products
+	count(*) filter (where size > 16) as "count large",
+	avg(price) filter (where size > 16) as "average large"
+FROM inventory.products
+group by rollup (category_id)
+order by category_id
+;
