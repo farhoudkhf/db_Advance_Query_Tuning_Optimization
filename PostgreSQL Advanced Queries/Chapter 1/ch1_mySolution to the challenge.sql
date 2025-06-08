@@ -63,3 +63,27 @@ group by so.customer_id, sc.customer_id
 order by ttlCount DESC
 ;
 
+
+-- with use of EXTRACT
+SELECT 
+	so.customer_id,
+	sc.company,
+	count(*) as ttlCount,
+	-- filter march
+	count(*) filter (where extract(month from so.order_date) = 3) as "march",
+	-- filter april
+	count(*) filter (where extract(month from so.order_date) = 4) as "april"
+from sales.orders so
+	JOIN sales.customers sc on sc.customer_id = so.customer_id
+group by so.customer_id, sc.customer_id
+order by ttlCount DESC
+;
+
+-- use of extract
+SELECT 
+	order_date, 
+	extract(month from order_date) as month,
+	extract(year from order_date) as year
+from sales.orders
+group by order_date
+having extract(month from order_date) = 3;

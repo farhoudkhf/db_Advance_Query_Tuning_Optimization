@@ -1,0 +1,10 @@
+select product_name,
+	category,
+	price,
+	min(price) over(w) AS cat_min_price,
+	max(price) over(w) AS cat_max_price,
+	avg(price) over(w) AS cat_avg_price,
+	count(*) over(w) AS cat_count
+from products
+window w as (partition by category)
+order by category, price;
