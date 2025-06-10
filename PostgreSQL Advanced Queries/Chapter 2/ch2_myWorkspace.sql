@@ -1,7 +1,7 @@
 -- ch2 my workspace
 -- Use Window Functions to Perform Calculations across Row Sets
 
--- ch2_1
+-- ch2_1 - OVER
 -- Create a window function with an OVER clause
 SELECT * from inventory.products;
 
@@ -97,7 +97,7 @@ from inventory.products
 window wdw as (partition by category_id)
 order by sku, size;
 
--- ch2_4
+-- ch2_4 -- over (partition by ___ order by ___)
 -- Ordering data within a partition
 select * from inventory.categories;
 
@@ -121,8 +121,8 @@ select * from sales.orders;
 
 select
 	o.order_id,
-	order_date,
-	customer_id,
+	o.order_date,
+	o.customer_id,
 	ol.quantity
 from
 	sales.orders o
@@ -141,17 +141,6 @@ from
 	inner join inventory.products p on p.sku = ol.sku
 ;
 
-select
-	ol.order_id,
-	ol.line_id,
-	ol.sku,
-	ol.quantity,
-	p.price as "each price",
-	p.price * ol.quantity as "line total"
-from
-	sales.order_lines ol
-	inner join inventory.products p on p.sku = ol.sku
-;
 
 select
 	ol.order_id,
@@ -169,8 +158,7 @@ from
 	inner join inventory.products p on p.sku = ol.sku
 ;
 
-
--- my code 
+-- my code with window
 select
 	ol.order_id,
 	ol.line_id,
@@ -179,6 +167,7 @@ select
 	p.price as "each price",
 	p.price * ol.quantity as "line total",
 	avg(p.price * ol.quantity) over(wdw) as "line avg",
+	sum(p.price * ol.quantity) over(partition by ol.order_id) as "order total",
 	sum(p.price * ol.quantity) over(wdw) as "order running total"
 from
 	sales.order_lines ol
@@ -187,16 +176,34 @@ window wdw as(partition by ol.order_id order by ol.line_id)
 ;
 
 
+-- ch2_5 -- over (order by ___ rows between _ preceding and _ following)
+-- Calculate a moving average with a sliding window
+select * from sales.orders;
+
+select 
+	order_id,
+	sum(order_id) over (order by order_id) as "running total"
+from sales.orders;
 
 
+select 
+	order_id,
+	sum(order_id) over (order by order_id rows between 0 preceding and 2 following) 
+		as "3 period leading sum"
+from sales.orders;
 
-
--- ch2_5
--- 
-
+select 
+	order_id,
+	sum(order_id) over (order by order_id rows between 0 preceding and 2 following) 
+		as "3 period leading sum",
+	sum(order_id) over (order by order_id rows between 2 preceding and 0 following) 
+		as "3 period trailing sum",
+	avg(order_id) over (order by order_id rows between 1 preceding and 1 following) 
+		as "3 period moving avg"
+from sales.orders;
 
 
 -- ch2_6
--- 
+-- Return values at specific locations within a window
 
 
