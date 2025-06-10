@@ -205,5 +205,57 @@ from sales.orders;
 
 -- ch2_6
 -- Return values at specific locations within a window
+select * from sales.customers order by company;
+
+select 
+	company,
+	first_value(company) over (order by company),
+	last_value(company) over (order by company),
+	nth_value(company, 3) over (order by company)
+from sales.customers
+order by company;
+
+SELECT
+	company,
+	first_value(company) over (order by company
+		rows between unbounded preceding and unbounded following),
+	last_value(company) over (order by company
+		rows between unbounded preceding and unbounded following),
+	nth_value(company, 3) over (order by company
+		rows between unbounded preceding and unbounded following)
+from sales.customers
+order by company;
+
+select * from sales.orders;
+select 
+	customer_ID,
+	count(*) 
+from sales.orders 
+group by customer_id
+order by customer_id;
+
+-- my code with DISTINCT value
+select 
+	distinct o.customer_id,
+	company,
+	count(*) over(partition by o.customer_id) as "number of orders",
+	-- count(*) over() as "total",
+	round(((count(*) over(partition by o.customer_id)) * 100.0 / (count(*) over())), 2) 
+		as "% of total",
+	first_value(order_date) 
+		over (partition by o.customer_id 
+				order by order_date
+				rows between unbounded preceding and unbounded following),
+	last_value(order_date) 
+		over (partition by o.customer_id 
+				order by order_date
+				rows between unbounded preceding and unbounded following)
+from sales.orders o
+	join sales.customers c on c.customer_id = o.customer_id
+order by company;
+
+
+
+
 
 
