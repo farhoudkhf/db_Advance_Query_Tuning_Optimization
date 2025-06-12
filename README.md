@@ -2,6 +2,7 @@
 * Advanced PostgreSQL
 * Advanced Query - Tuning | Performance Optimization
 * PostgreSQL: Advanced Queries
+* db_project_portfolio_design
 
 <br/>
 
@@ -41,3 +42,12 @@
 4. Ranking Data with Windows and Hypothetical Sets
 5. Define Output Values with Conditional Expressions 
 6. Additional Querying Techniques for Common Problems 
+
+
+# db_project_portfolio_design
+1. Blueprint
+2. Design diagram
+3. Create db
+4. Table and dependencies design 
+5. Load Data
+6. Query Templates
