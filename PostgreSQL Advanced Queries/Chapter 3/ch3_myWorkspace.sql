@@ -38,7 +38,7 @@ from public.people_heights
 group by rollup (gender)
 ;
 
--- ch3_2 - 
+-- ch3_2 - percentile_cont(0.25)...
 -- Calculate the first and third quartiles of a dataset
 select * from public.people_heights;
 
@@ -77,13 +77,29 @@ where height_inches >= 69.56) as "#of above 3rd quartile"
 
 -- ch3_3 - MODE
 -- Find the most frequent value within a dataset with MODE
+SELECT
+	mode() within group (order by height_inches)
+from public.people_heights
+;
 
-
-
+-- this will return the correct mode
+select height_inches, count(*)
+from public.people_heights
+group by height_inches
+order by count(*) DESC
+; 
 
 -- ch3_4 - 
--- 
-
+-- Determine the range of values within a dataset
+select 
+	gender,
+	min(height_inches),
+	max(height_inches),
+	max(height_inches) - min(height_inches) as range
+from public.people_heights
+group by rollup (gender)
+order by range
+;
 
 
 
