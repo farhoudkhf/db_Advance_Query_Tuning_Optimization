@@ -58,14 +58,27 @@ group by rollup (gender)
 ;
 
 
--- ch4_3 - 
+-- ch4_3 - percent_rank() over (order by ___ desc) case/when/then/else/end
 -- View top performers with percentile ranks
-
-
+select 
+	name,
+	height_inches,
+	gender,
+	percent_rank() over (order by height_inches desc),
+	case
+		when percent_rank() over (order by height_inches desc) < 0.25 then '1st'
+		when percent_rank() over (order by height_inches desc) < 0.50 then '2nd'
+		when percent_rank() over (order by height_inches desc) < 0.75 then '3rd'
+		else '4th'
+	end as "quartile rank"
+from public.people_heights
+;
 
 
 -- ch4_4 - 
--- 
+-- Evaluate probability with cumulative distribution
+
+
 
 
 
