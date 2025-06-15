@@ -75,10 +75,17 @@ from public.people_heights
 ;
 
 
--- ch4_4 - 
+-- ch4_4 - cume_dist() over (order by ___ desc) 
 -- Evaluate probability with cumulative distribution
-
-
+select 
+	name,
+	gender,
+	height_inches,
+	percent_rank() over (order by height_inches desc),
+	cume_dist() over (order by height_inches desc) 
+from public.people_heights
+order by height_inches desc
+;
 
 
 
