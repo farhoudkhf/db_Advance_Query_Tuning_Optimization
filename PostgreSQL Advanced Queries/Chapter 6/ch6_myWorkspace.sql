@@ -39,7 +39,7 @@ select
 from sales.orders;
 
 -- ch6_3 - lag(___, xx) over (partition by ___ order by ___)
--- 		 - 
+-- 		 - lead(___, xx) over (partition by ___ order by ___)
 -- Move rows within a result with LEAD and LAG
 select 
 	order_id,
@@ -79,14 +79,56 @@ order by customer_id, order_date
 ;
 
 
--- ch6_4 - 
--- 
+-- ch6_4 - IN
+-- Use an IN function with a subquery
+select *
+from inventory.products
+where product_name = 'Delicate'
+	or product_name = 'Bold'
+	or product_name = 'Light'
+;
 
+select *
+from inventory.products
+where product_name in  ('Delicate', 'Bold', 'Light')
+;
 
+select product_name, count(*)
+from inventory.products
+group by product_name
+having count(*) >= 5
+;
 
--- ch6_5 - 
--- 
+select *
+from inventory.products
+where product_name in (
+	select product_name
+	from inventory.products
+	group by product_name
+	having count(*) >= 5
+	)
+;
 
+-- ch6_5 - generate_series(start, end, interval)
+-- Define WHERE criteria with a series
+select generate_series(100, 120, 5); 
 
+select * from generate_series(100, 120, 5);
+
+select *
+from sales.orders
+where order_id in (
+	select generate_series(0, 5000, 10)
+	)
+order by order_id;
+
+select generate_series('2021-03-15'::timestamp, '2021-03-31'::timestamp, '5 days');
+
+select *
+from sales.orders
+where order_date  in (
+	select generate_series('2021-03-15'::timestamp, '2021-03-31'::timestamp, '5 days')
+	)
+order by order_id;
 
 

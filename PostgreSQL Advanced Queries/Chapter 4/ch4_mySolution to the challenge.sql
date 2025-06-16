@@ -1,4 +1,4 @@
--- ch4_
+-- ch4_challenge
 
 
 -- SQL request(s) below
