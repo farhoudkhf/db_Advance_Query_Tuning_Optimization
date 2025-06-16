@@ -32,17 +32,39 @@ from inventory.products
 ;
 
 
--- ch5_2 
+-- ch5_2 - coalesce 
 -- Merge columns with COALESCE
 select coalesce (null, 'B', 'C');
 select coalesce (null, null, null);
 
+select * from inventory.categories;
+
+-- insert into inventory.categories (category_id, product_line)
+-- values (4, 'test')
+
+insert into inventory.categories
+values (4, null, 'Gift Baskets');
+
+select 
+	category_id,
+	coalesce (category_description, product_line) as "cat_desc",
+	product_line
+from inventory.categories
+;
 
 
--- ch5_3 
--- 
+-- ch5_3 -NULLIF
+-- Convert values to null with NULLIF
+select nullif ('A', 'B');
+select nullif ('A', 'A');
 
+select * from inventory.products;
 
-
-
-
+select 
+	sku,
+	product_name,
+	category_id,
+	nullif (size, 32) as "size",
+	price
+from inventory.products
+;
