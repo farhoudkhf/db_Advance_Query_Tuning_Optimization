@@ -132,3 +132,41 @@ where order_date  in (
 order by order_id;
 
 
+-- ch6_6 - 
+-- Pattern matching with regular expressions
+SELECT 'abracadabra' ~ 'ca';
+
+select product_name from inventory.products;
+
+select product_name 
+from inventory.products
+where product_name ~* 'f'
+;
+
+select product_name
+from inventory.products
+where product_name ~* '^f'
+;
+
+select product_name
+from inventory.products
+where product_name !~* '^f'
+;
+
+select count(product_name)
+from inventory.products
+where product_name ~* 'infused'
+;
+
+select count(product_name)
+from inventory.products
+where product_name ilike '%infused%'
+;
+
+
+
+
+
+
+
+
