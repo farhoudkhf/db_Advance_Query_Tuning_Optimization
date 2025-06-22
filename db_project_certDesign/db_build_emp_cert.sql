@@ -25,7 +25,7 @@ CREATE SCHEMA employee;
 CREATE SCHEMA certificate;
 
 
--- Create a table for the db_portfolio - certificates
+-- Create a table for the db_portfolio - certificates [tbl#1]
 CREATE TABLE certificate.certificates (
     cert_id         INT GENERATED ALWAYS AS IDENTITY (START WITH 100 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     cert_name       VARCHAR(255) NOT NULL,
@@ -46,14 +46,21 @@ CREATE TABLE certificate.certificates (
     note            VARCHAR(50)
 );
 
--- Create a table for the db_portfolio -  skills data
+ALTER TABLE certificate.certificates
+DROP COLUMN IF EXISTS skill_id;
+
+ALTER TABLE certificate.certificates
+DROP COLUMN IF EXISTS tutor_id;
+
+
+-- Create a table for the db_portfolio -  skills [tbl#2]
 CREATE TABLE certificate.skills (
     skill_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     skill_name  VARCHAR(50) NOT NULL,
     skill_description VARCHAR(50)
 );
 
--- Create a table for the db_portfolio - skill_lines
+-- Create a table for the db_portfolio - skill_lines [tbl#3]
 CREATE TABLE certificate.skill_lines (
     skill_line_id   INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     cert_id         INT,
@@ -64,3 +71,33 @@ select * from certificate.skills where skill_name ~* 'python';
 delete from certificate.skills where skill_name ~* ' python';
 delete from certificate.skills where skill_name = 'Python (Programming Language';
 select * from certificate.skills;
+
+
+-- Create a table for the db_portfolio - platforms [tbl#4]
+CREATE TABLE certificate.platforms (
+    platform_id     INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    platform_name   VARCHAR(255),
+    platform_note   VARCHAR(255)
+);
+
+-- Create a table for the db_portfolio - tutors [tbl#5]
+CREATE TABLE certificate.tutors (
+    tutor_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    tutor_name  VARCHAR(255),
+    tutor_note VARCHAR(255)
+);
+
+-- Create a table for the db_portfolio - tutor_lines [tbl#6]
+CREATE TABLE certificate.tutor_lines (
+    tutor_line_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    cert_id         INT,
+    tutor_id        INT
+);
+
+
+
+
+
+
+
+
