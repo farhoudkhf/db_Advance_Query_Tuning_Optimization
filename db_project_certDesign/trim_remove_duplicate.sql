@@ -1,5 +1,4 @@
--- fine, trim, remove duplicate
-
+-- find, trim, remove duplicate
 select * from certificate.skills;
 
 select skill_id, skill_name from certificate.skills where skill_name ~* '^ ';
@@ -23,12 +22,12 @@ order by count(skill_name) desc
 ;
 
 --delete duplicate
-DELETE FROM
+delete from 
     certificate.skills a
-        USING certificate.skills b
-WHERE
+        using certificate.skills b
+where
     a.skill_id < b.skill_id
-    AND a.skill_name = b.skill_name;
+    and a.skill_name = b.skill_name;
 
 
 -- trim all

@@ -1,0 +1,207 @@
+-- Create the db_cert Database --mydb_portfolio
+-- ALTER DATABASE "mydb_SelfStudy" RENAME TO db_portfolio; 
+    -- db need to be discounected -->
+    -- on terminal psql -U postgres
+
+----------------------------------------------------------
+-- EMPTY THE db_cert DATABASE IN CASE IT CONTAINS CONTENT
+----------------------------------------------------------
+DROP TABLE IF EXISTS employee.employees
+DROP TABLE IF EXISTS employee.emp_cert_line
+DROP SCHEMA IF EXISTS employee;
+DROP TABLE IF EXISTS certificate.certificates
+DROP TABLE IF EXISTS certificate.skill_lines
+DROP TABLE IF EXISTS certificate.skills
+DROP TABLE IF EXISTS certificate.tutor_lines
+DROP TABLE IF EXISTS certificate.tutors
+DROP TABLE IF EXISTS certificate.platforms
+DROP TABLE IF EXISTS certificate.org_lines
+DROP TABLE IF EXISTS certificate.orgs
+DROP SCHEMA IF EXISTS certificate;
+
+-- validate list of tables in the schema 
+SELECT *
+FROM pg_catalog.pg_tables
+WHERE schemaname != 'pg_catalog' AND
+    schemaname != 'information_schema';
+
+-----------------------------------
+-- CREATE THE TABLE STRUCTURE
+-----------------------------------
+
+--------------------------------------------------------------------
+db	        #	schema	    tbl_name	        build
+--------------------------------------------------------------------
+empskills	1	employee	tbl_emp	            employees       [10]
+empskills	2	employee	tbl_emp_cert_line	emp_cert_line   [9]
+empskills	3	certificate	tbl_certificates	certificates    [1]
+empskills	4	certificate	tbl_skill_lines	    skill_lines     [3]
+empskills	5	certificate	tbl_skills	        skills          [2]
+empskills	6	certificate	tbl_tutor_lines	    tutor_lines     [6]
+empskills	7	certificate	tbl_tutors	        tutors          [5]
+empskills	8	certificate	tbl_platforms	    platforms       [4]
+empskills	9	certificate	tbl_org_lines	    org_lines       [8]
+empskills	10	certificate	tbl_orgs	        orgs            [7]
+--------------------------------------------------------------------
+
+-- Create the database schemas
+CREATE SCHEMA employee;
+CREATE SCHEMA certificate;
+
+-- Create a table for the db_portfolio - certificates [x1]
+CREATE TABLE certificate.certificates (
+    cert_id         INT GENERATED ALWAYS AS IDENTITY (START WITH 100 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    cert_name       VARCHAR(255) NOT NULL,
+    completed_date  DATE,
+    course_length   TIME,
+    study_time      TIME,
+    platform_id     INT,
+    showcase        BOOLEAN,
+    cert_code       VARCHAR(255),
+    cloud_path      VARCHAR(255),
+    exam_score      INT,
+    hands_on        BOOLEAN,
+    repo            VARCHAR(255),
+    posted_linkedin TIMESTAMP,
+    note            VARCHAR(50)
+);
+
+-- Create a table for the db_portfolio - skills data [x2]
+CREATE TABLE certificate.skills (
+    skill_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    skill_name  VARCHAR(50) NOT NULL,
+    skill_description VARCHAR(50)
+);
+
+-- Create a table for the db_portfolio - skill_lines [x3]
+CREATE TABLE certificate.skill_lines (
+    skill_line_id   INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    cert_id         INT,
+    skill_id        INT
+);
+
+-- Create a table for the db_portfolio - platforms [x4]
+CREATE TABLE certificate.platforms (
+    platform_id     INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    platform_name   VARCHAR(255),
+    platform_note   VARCHAR(255)
+);
+
+-- Create a table for the db_portfolio - tutors [x5]
+CREATE TABLE certificate.tutors (
+    tutor_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    tutor_name  VARCHAR(255),
+    tutor_note VARCHAR(255)
+);
+
+-- Create a table for the db_portfolio - tutor_lines [x6]
+CREATE TABLE certificate.tutor_lines (
+    tutor_line_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    cert_id         INT,
+    tutor_id        INT
+);
+
+-- Create a table for the db_portfolio - orgs [x7]
+CREATE TABLE certificate.orgs (
+    org_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    org_name  VARCHAR(255),
+    org_description TEXT
+);
+
+-- Create a table for the db_portfolio - org_lines [x8]
+CREATE TABLE certificate.org_lines (
+    org_line_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    cert_id         INT,
+    org_id        INT
+);
+
+-- Create a table for the db_portfolio -> employee -> emp_cert_line [x9]
+CREATE TABLE employee.emp_cert_line (
+    emp_cert_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    emp_id         INT,
+    cert_id        INT
+);
+
+-- Create a table for the db_portfolio -> employee -> employees [x10]
+CREATE TABLE employee.employees (
+    emp_id 			INT GENERATED ALWAYS AS IDENTITY (START WITH 9000 INCREMENT BY 1) NOT NULL PRIMARY KEY,
+    firstname 		VARCHAR(255) NOT NULL,
+    lastname 		VARCHAR(255) NOT NULL,
+    start_date  	DATE,
+    department_id 	INT,
+    emp_note 		TEXT 
+);
+
+
+-----------------------------------
+-- INSERT DATA INTO TABLES 
+-----------------------------------
+-- Add data to the platforms table
+INSERT INTO certificate.platforms (platform_name)
+VALUES ('LinkedIn Learn'), ('Microsoft Learn'), ('Cloud Academi'), ('Google'), ('Amazon');
+
+-- example data 
+insert into certificate.certificates (cert_name)
+values ('cert_Sample_03'), ('cert_Sample_04'), ('cert_Sample_05'), ('cert_Sample_06');
+
+insert into certificate.skill_lines (cert_id, skill_id)
+values (
+			(select cert_id from certificate.certificates where cert_name ~* '_01'),
+			(select skill_id from certificate.skills where skill_name ~* 'python')
+);
+
+insert into certificate.skill_lines (cert_id, skill_id)
+values (
+			(select cert_id from certificate.certificates where cert_name ~* '_01'),
+			(select skill_id from certificate.skills where skill_name ~* 'Data Analytics')
+);
+
+---------------------------------------
+-- INSERT DATA INTO TABLES - Transform
+---------------------------------------
+-- skills extracted and load using csv file
+
+-- example of cleaning data on db using sql
+-- find, trim, remove duplicate
+select * from certificate.skills;
+
+select skill_id, skill_name from certificate.skills where skill_name ~* '^ ';
+-- example
+select skill_name, trim(from skill_name) from certificate.skills where skill_name ~* 'sql'
+
+select * from certificate.skills where skill_name ~* 'sql';
+
+
+-- trim() - remove spaces from start and end of the data 
+update certificate.skills
+set skill_name = trim(skill_name)
+where skill_name = ' SQL';
+
+-- count the duplicate names
+select skill_name, count(skill_name)
+from certificate.skills
+group by skill_name
+order by count(skill_name) desc;
+
+--delete duplicate
+delete from
+    certificate.skills a
+        using certificate.skills b
+where
+    a.skill_id < b.skill_id
+    and a.skill_name = b.skill_name;
+
+-- trim all
+update certificate.skills
+set skill_name = trim(skill_name);
+
+
+--------------------------
+-- REVIEW THE ENTERED DATA
+--------------------------
+-- 
+SELECT * FROM ;
+SELECT * FROM ;
+SELECT * FROM ;
+SELECT * FROM ;
+SELECT * FROM ;
