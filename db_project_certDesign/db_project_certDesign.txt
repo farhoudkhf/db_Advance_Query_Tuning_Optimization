@@ -48,7 +48,7 @@ empskills	10	certificate	tbl_orgs	        orgs            [7]
 CREATE SCHEMA employee;
 CREATE SCHEMA certificate;
 
--- Create a table for the db_portfolio - certificates [x1]
+-- Create a table for the db_portfolio - certificates [1]
 CREATE TABLE certificate.certificates (
     cert_id         INT GENERATED ALWAYS AS IDENTITY (START WITH 100 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     cert_name       VARCHAR(255) NOT NULL,
@@ -66,63 +66,63 @@ CREATE TABLE certificate.certificates (
     note            VARCHAR(50)
 );
 
--- Create a table for the db_portfolio - skills data [x2]
+-- Create a table for the db_portfolio - skills data [2]
 CREATE TABLE certificate.skills (
     skill_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     skill_name  VARCHAR(50) NOT NULL,
     skill_description VARCHAR(50)
 );
 
--- Create a table for the db_portfolio - skill_lines [x3]
+-- Create a table for the db_portfolio - skill_lines [3]
 CREATE TABLE certificate.skill_lines (
     skill_line_id   INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     cert_id         INT,
     skill_id        INT
 );
 
--- Create a table for the db_portfolio - platforms [x4]
+-- Create a table for the db_portfolio - platforms [4]
 CREATE TABLE certificate.platforms (
     platform_id     INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     platform_name   VARCHAR(255),
     platform_note   VARCHAR(255)
 );
 
--- Create a table for the db_portfolio - tutors [x5]
+-- Create a table for the db_portfolio - tutors [5]
 CREATE TABLE certificate.tutors (
     tutor_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     tutor_name  VARCHAR(255),
     tutor_note VARCHAR(255)
 );
 
--- Create a table for the db_portfolio - tutor_lines [x6]
+-- Create a table for the db_portfolio - tutor_lines [6]
 CREATE TABLE certificate.tutor_lines (
     tutor_line_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     cert_id         INT,
     tutor_id        INT
 );
 
--- Create a table for the db_portfolio - orgs [x7]
+-- Create a table for the db_portfolio - orgs [7]
 CREATE TABLE certificate.orgs (
     org_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     org_name  VARCHAR(255),
     org_description TEXT
 );
 
--- Create a table for the db_portfolio - org_lines [x8]
+-- Create a table for the db_portfolio - org_lines [8]
 CREATE TABLE certificate.org_lines (
     org_line_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     cert_id         INT,
     org_id        INT
 );
 
--- Create a table for the db_portfolio -> employee -> emp_cert_line [x9]
+-- Create a table for the db_portfolio -> employee -> emp_cert_line [9]
 CREATE TABLE employee.emp_cert_line (
     emp_cert_id    INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     emp_id         INT,
     cert_id        INT
 );
 
--- Create a table for the db_portfolio -> employee -> employees [x10]
+-- Create a table for the db_portfolio -> employee -> employees [10]
 CREATE TABLE employee.employees (
     emp_id 			INT GENERATED ALWAYS AS IDENTITY (START WITH 9000 INCREMENT BY 1) NOT NULL PRIMARY KEY,
     firstname 		VARCHAR(255) NOT NULL,
