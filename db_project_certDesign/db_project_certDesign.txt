@@ -156,6 +156,16 @@ values (
 			(select skill_id from certificate.skills where skill_name ~* 'Data Analytics')
 );
 
+-- insert using vba script to generate sql
+insert into certificate.orgs (org_name) values ('cloud academy');
+insert into certificate.orgs (org_name) values ('LinkedIn');
+insert into certificate.orgs (org_name) values ('Microsoft');
+insert into certificate.orgs (org_name) values ('CPE');
+insert into certificate.orgs (org_name) values ('PMI');
+insert into certificate.orgs (org_name) values ('IIBA');
+insert into certificate.orgs (org_name) values ('Atlassian');
+
+
 ---------------------------------------
 -- INSERT DATA INTO TABLES - Transform
 ---------------------------------------
@@ -200,8 +210,4 @@ set skill_name = trim(skill_name);
 -- REVIEW THE ENTERED DATA
 --------------------------
 -- 
-SELECT * FROM ;
-SELECT * FROM ;
-SELECT * FROM ;
-SELECT * FROM ;
-SELECT * FROM ;
+SELECT * FROM certificate.skills;

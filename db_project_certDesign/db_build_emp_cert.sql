@@ -52,6 +52,8 @@ DROP COLUMN IF EXISTS skill_id;
 ALTER TABLE certificate.certificates
 DROP COLUMN IF EXISTS tutor_id;
 
+ALTER TABLE certificate.certificates
+ALTER COLUMN exam_score TYPE decimal;
 
 -- Create a table for the db_portfolio -  skills [tbl#2]
 CREATE TABLE certificate.skills (
