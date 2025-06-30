@@ -9,6 +9,8 @@ select * from certificate.skill_lines;
 
 select * from certificate.platforms;
 
+select * from certificate.orgs;
+
 insert into certificate.skills 
 ;
 
@@ -226,6 +228,7 @@ where
 select cert_name, completed_date 
 from certificate.certificates 
 order by completed_date desc;
+
 
 
 
