@@ -229,7 +229,16 @@ select cert_name, completed_date
 from certificate.certificates 
 order by completed_date desc;
 
+select * from certificate.org_lines order by cert_id;
 
+select * from certificate.platforms;
+
+SELECT *
+FROM pg_catalog.pg_tables
+WHERE schemaname != 'pg_catalog' AND
+    schemaname != 'information_schema'
+order by schemaname, tablename
+;
 
 
 
